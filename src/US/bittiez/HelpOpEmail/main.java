@@ -3,7 +3,6 @@ package US.bittiez.HelpOpEmail;
 import org.apache.commons.io.FileUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Server;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -62,10 +61,12 @@ public class main extends JavaPlugin{
                         mail.message = tempTemplate;
                         new Thread(mail).run();
 
-                        Bukkit.getServer().getOnlinePlayers().stream().filter(p -> p.hasPermission("HelpOp.receive")).forEach(p -> {
-                            p.sendMessage(ChatColor.GREEN + "[HelpOp] [" + sender.getName() + "]" + ChatColor.AQUA + " asked: " + fromMessage);
-                            p.sendMessage(ChatColor.GREEN + "[HelpOp]" + ChatColor.AQUA + " This message has also been dispatched to the emails set up in the config.");
-                        });
+                        for(Player p : Bukkit.getServer().getOnlinePlayers()){
+                            if(p.hasPermission("HelpOp.receive")) {
+                                p.sendMessage(ChatColor.GREEN + "[HelpOp] [" + sender.getName() + "]" + ChatColor.AQUA + " asked: " + fromMessage);
+                                p.sendMessage(ChatColor.GREEN + "[HelpOp]" + ChatColor.AQUA + " This message has also been dispatched to the emails set up in the config.");
+                            }
+                        }
 
                         sender.sendMessage(ChatColor.AQUA + "Your support request has been received, we will be in contact shortly!");
                         return true;
