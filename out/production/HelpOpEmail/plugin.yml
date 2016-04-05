@@ -6,3 +6,9 @@ commands:
     HelpOp:
         description: /HelpOp <message> will send a help request to online staff and send an email to the support team.
         usage: /HelpOp <message>
+        permission: HelpOp.ask
+permissions:
+    HelpOp.ask:
+        description: Allows the user to ask questions via /HelpOp <message>
+    HelpOp.receive:
+        description: Will receive an ingame message that the player sent

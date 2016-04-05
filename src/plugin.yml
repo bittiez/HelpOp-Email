@@ -10,3 +10,5 @@ commands:
 permissions:
     HelpOp.ask:
         description: Allows the user to ask questions via /HelpOp <message>
+    HelpOp.receive:
+        description: Will receive an ingame message that the player sent

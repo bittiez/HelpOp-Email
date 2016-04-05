@@ -1,7 +1,9 @@
 package US.bittiez.HelpOpEmail;
 
 import org.apache.commons.io.FileUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Server;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -33,7 +35,7 @@ public class main extends JavaPlugin{
     }
 
     public boolean onCommand(CommandSender sender, Command cmd, String label, String args[]) {
-        if(cmd.getName().toLowerCase().equals("helpop")) {
+        if(cmd.getName().equalsIgnoreCase("helpop")) {
             if (!(sender instanceof Player)) {
                 sender.sendMessage(ChatColor.RED
                         + "HelpOp is not available from the console.");
@@ -57,11 +59,15 @@ public class main extends JavaPlugin{
                         String tempTemplate = template;
                         tempTemplate = tempTemplate.replaceAll("(\\[USERNAME\\])", sender.getName());
                         tempTemplate = tempTemplate.replaceAll("(\\[MESSAGE\\])", fromMessage.toString());
-
                         mail.message = tempTemplate;
-
                         new Thread(mail).run();
-                        sender.sendMessage("Email sent!");
+
+                        Bukkit.getServer().getOnlinePlayers().stream().filter(p -> p.hasPermission("HelpOp.receive")).forEach(p -> {
+                            p.sendMessage(ChatColor.GREEN + "[HelpOp] [" + sender.getName() + "]" + ChatColor.AQUA + " asked: " + fromMessage);
+                            p.sendMessage(ChatColor.GREEN + "[HelpOp]" + ChatColor.AQUA + " This message has also been dispatched to the emails set up in the config.");
+                        });
+
+                        sender.sendMessage(ChatColor.AQUA + "Your support request has been received, we will be in contact shortly!");
                         return true;
                     } else {
                         sender.sendMessage("You do not have the required permissions to use this command!");
