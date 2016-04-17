@@ -16,8 +16,6 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.util.List;
 
-//To-do: add a reload command, and check for permissions on everything
-// add player location to the email
 
 /**
  * Created by bitti on 4/3/2016.
@@ -55,9 +53,11 @@ public class main extends JavaPlugin{
                             fromMessage.append(s + " ");
                         }
 
+                        Player who = (Player)sender;
                         String tempTemplate = template;
                         tempTemplate = tempTemplate.replaceAll("(\\[USERNAME\\])", sender.getName());
                         tempTemplate = tempTemplate.replaceAll("(\\[MESSAGE\\])", fromMessage.toString());
+                        tempTemplate = tempTemplate.replaceAll("(\\[LOCATION\\])", String.format("[X: %s] [Y: %s] [Z: %s] [WORLD: %s]", who.getLocation().getX() + "", who.getLocation().getY() + "", who.getLocation().getZ() + "", who.getWorld().getName()));
                         mail.message = tempTemplate;
                         new Thread(mail).run();
 
