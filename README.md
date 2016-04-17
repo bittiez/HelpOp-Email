@@ -26,6 +26,7 @@ The config should be fairly selft explanatory, as of this time the plugin only s
 The emailTemplate file is a template file used for your emails, the current placeholders available are:
 [USERNAME] -> This will be replaced with the players Minecraft username
 [MESSAGE]  -> This will be replaced with the players message or question
+[LOCATION] -> This will be replaced with the players location and world
 
 
 
