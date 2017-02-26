@@ -1,5 +1,6 @@
 # HelpOp-Email
-Spigot 1.8, 1.9 plugin to add a better /HelpOp command
+Note: This requires Java 1.8+
+Spigot 1.11 plugin to add a better /HelpOp command
 
 
 
@@ -21,14 +22,9 @@ Place the jar file in your plugins folder
 # Configuration
 After you install the plugin, run your server once to create the config.yml file and the emailTemplate.html.
 The config should look like this: https://github.com/bittiez/HelpOp-Email/blob/master/src/config.yml
-The config should be fairly selft explanatory, as of this time the plugin only support smtp.
+The config should be fairly self explanatory, as of this time the plugin only supports smtp.
 
 The emailTemplate file is a template file used for your emails, the current placeholders available are:
 [USERNAME] -> This will be replaced with the players Minecraft username
 [MESSAGE]  -> This will be replaced with the players message or question
 [LOCATION] -> This will be replaced with the players location and world
-
-
-
-# Up coming features
-- Add the players location to the emails.

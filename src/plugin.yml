@@ -1,5 +1,5 @@
-name: HelpOp Email
-version: 1.0.0
+name: HelpOpEmail
+version: 1.0.1
 author: bittiez
 main: US.bittiez.HelpOpEmail.main
 commands:
