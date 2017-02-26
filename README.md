@@ -1,5 +1,6 @@
 # HelpOp-Email
 Note: This requires Java 1.8+
+
 Spigot 1.11 plugin to add a better /HelpOp command
 
 
