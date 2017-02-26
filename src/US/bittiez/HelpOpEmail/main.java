@@ -21,7 +21,7 @@ import java.util.List;
  * Created by bitti on 4/3/2016.
  */
 public class main extends JavaPlugin{
-    public static String version = "1.0.0";
+    public static String version = "1.0.2";
     public String template = "";
     public FileConfiguration config = getConfig();
 
@@ -64,7 +64,7 @@ public class main extends JavaPlugin{
                         for(Player p : Bukkit.getServer().getOnlinePlayers()){
                             if(p.hasPermission("HelpOp.receive")) {
                                 p.sendMessage(ChatColor.GREEN + "[HelpOp] [" + sender.getName() + "]" + ChatColor.AQUA + " asked: " + fromMessage);
-                                p.sendMessage(ChatColor.GREEN + "[HelpOp]" + ChatColor.AQUA + " This message has also been dispatched to the emails set up in the config.");
+                                p.sendMessage(ChatColor.GREEN + "[HelpOp]" + ChatColor.AQUA + " This message has also been dispatched to the email(s) set up in the config.");
                             }
                         }
 

@@ -60,6 +60,7 @@ public class sendMail implements Runnable {
                             Transport.send(message);
                             Log.info("HelpOp Email has been sent");
                         }catch (Exception mex) {
+                            Log.error("An error occured trying to the a HelpOp email. Error details:");
                             mex.printStackTrace();
                         }
 
@@ -67,7 +68,7 @@ public class sendMail implements Runnable {
                         Log.error("We need an email server to send this email from! Check your configuration.");
                     }
                 } else {
-                    Log.error("There was an internal error for HelpOp Email, please notify the author.");
+                    Log.error("It appears there was no message content!");
                 }
             } else {
                 Log.error("We don't know who this email should've been sent from!");
