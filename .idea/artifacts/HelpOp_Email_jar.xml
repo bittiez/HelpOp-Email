@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="HelpOp-Email:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/HelpOp_Email_jar</output-path>
+    <root id="archive" name="HelpOp-Email.jar">
+      <element id="module-output" name="HelpOp-Email" />
+    </root>
+  </artifact>
+</component>
