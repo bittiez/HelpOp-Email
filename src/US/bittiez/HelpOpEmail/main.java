@@ -17,9 +17,6 @@ import java.nio.file.Files;
 import java.util.List;
 
 
-/**
- * Created by bitti on 4/3/2016.
- */
 public class main extends JavaPlugin{
     public static String version = "1.0.2";
     public String template = "";
@@ -81,7 +78,7 @@ public class main extends JavaPlugin{
     }
 
     private boolean checkTemplate(){
-        File template = new File("plugins/HelpOp_Email/emailTemplate.html");
+        File template = new File("plugins/HelpOpEmail/emailTemplate.html");
         if(!template.exists()){
             URL inputUrl = getClass().getResource("/emailTemplate.html");
             try {

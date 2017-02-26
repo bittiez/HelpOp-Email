@@ -2,7 +2,7 @@ emailFrom: abc@gmail.com
 emailTo:
     - abcd@gmail.com
     - abcde@gmail.com
-emailSubject: HelpOp Email Support Request
+emailSubject: "HelpOp Email Support Request"
 emailHost: localhost
 smtpUser: ""
 smtpPassword: ""
