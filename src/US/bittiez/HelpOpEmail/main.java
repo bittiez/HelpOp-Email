@@ -44,6 +44,7 @@ public class main extends JavaPlugin{
                         mail.host = config.getString("emailHost");
                         mail.userName = config.getString("smtpUser");
                         mail.password = config.getString("smtpPassword");
+                        mail.port = config.getInt("smtpPort");
 
                         StringBuilder fromMessage = new StringBuilder();
                         for (String s : args) {

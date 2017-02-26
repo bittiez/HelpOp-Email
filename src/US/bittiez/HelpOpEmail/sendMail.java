@@ -20,6 +20,7 @@ public class sendMail implements Runnable {
     public String host = "localhost";
     public String userName;
     public String password;
+    public int port;
 
     @Override
     public void run() {
@@ -30,6 +31,7 @@ public class sendMail implements Runnable {
 
                         Properties emailProperties = new Properties();
                         emailProperties.setProperty("mail.smtp.host", host);
+                        emailProperties.setProperty("mail.smtp.port", String.valueOf(port));
 
                         if(userName != null && !userName.isEmpty())
                             emailProperties.setProperty("mail.user", userName);

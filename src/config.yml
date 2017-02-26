@@ -6,3 +6,4 @@ emailSubject: "HelpOp Email Support Request"
 emailHost: localhost
 smtpUser: ""
 smtpPassword: ""
+smtpPort: 25
