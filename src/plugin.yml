@@ -1,5 +1,5 @@
 name: HelpOpEmail
-version: 1.1.2
+version: 1.2.2
 author: bittiez
 main: US.bittiez.HelpOpEmail.main
 commands:
@@ -7,8 +7,14 @@ commands:
         description: /HelpOp <message> will send a help request to online staff and send an email to the support team.
         usage: /HelpOp <message>
         permission: HelpOp.ask
+    ReloadHelpOp:
+        description: This will reload the config.
+        usage: /ReloadHelpOp
+        permission: HelpOp.reload
 permissions:
     HelpOp.ask:
         description: Allows the user to ask questions via /HelpOp <message>
     HelpOp.receive:
         description: Will receive an ingame message that the player sent
+    HelpOp.reload:
+        description: This will reload the config.

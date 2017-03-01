@@ -18,7 +18,7 @@ import java.util.List;
 
 
 public class main extends JavaPlugin{
-    public static String version = "1.1.2";
+    public static String version = "1.2.2";
     public String template = "";
     public FileConfiguration config = getConfig();
 
@@ -29,6 +29,11 @@ public class main extends JavaPlugin{
     }
 
     public boolean onCommand(CommandSender sender, Command cmd, String label, String args[]) {
+        if(cmd.getName().equalsIgnoreCase("reloadhelpop")){
+            if(sender.hasPermission("HelpOp.reload")){
+                createConfig();
+            }
+        }
         if(cmd.getName().equalsIgnoreCase("helpop")) {
             if (!(sender instanceof Player)) {
                 sender.sendMessage(ChatColor.RED
