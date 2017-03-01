@@ -7,6 +7,7 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import java.net.ConnectException;
 import java.util.Properties;
 
 /**
@@ -64,8 +65,8 @@ public class sendMail implements Runnable {
                             // Send message
                             Transport.send(message);
                             Log.info("HelpOp Email has been sent");
-                        }catch (Exception mex) {
-                            Log.error("An error occured trying to the a HelpOp email. Error details:");
+                        } catch (Exception mex) {
+                            Log.error("An error occurred trying to the a HelpOp email. Error details:");
                             mex.printStackTrace();
                         }
 
