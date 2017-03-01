@@ -58,7 +58,7 @@ public class main extends JavaPlugin{
                         tempTemplate = tempTemplate.replaceAll("(\\[MESSAGE\\])", fromMessage.toString());
                         tempTemplate = tempTemplate.replaceAll("(\\[LOCATION\\])", String.format("[X: %s] [Y: %s] [Z: %s] [WORLD: %s]", who.getLocation().getX() + "", who.getLocation().getY() + "", who.getLocation().getZ() + "", who.getWorld().getName()));
                         mail.message = tempTemplate;
-                        new Thread(mail).run();
+                        new Thread(mail).start();
 
                         for(Player p : Bukkit.getServer().getOnlinePlayers()){
                             if(p.hasPermission("HelpOp.receive")) {
