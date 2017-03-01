@@ -7,3 +7,4 @@ emailHost: localhost
 smtpUser: ""
 smtpPassword: ""
 smtpPort: 25
+useSSL: true

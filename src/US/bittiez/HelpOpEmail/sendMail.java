@@ -21,6 +21,7 @@ public class sendMail implements Runnable {
     public String userName;
     public String password;
     public int port;
+    public boolean useSSL;
 
     @Override
     public void run() {
@@ -37,6 +38,8 @@ public class sendMail implements Runnable {
                             emailProperties.setProperty("mail.user", userName);
                         if(password != null && !password.isEmpty())
                             emailProperties.setProperty("mail.password", password);
+                        if(useSSL)
+                            emailProperties.setProperty("mail.smtp.ssl.enable", "true");
 
                         Session session = Session.getDefaultInstance(emailProperties);
 

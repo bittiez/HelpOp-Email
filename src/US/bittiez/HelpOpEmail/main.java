@@ -18,7 +18,7 @@ import java.util.List;
 
 
 public class main extends JavaPlugin{
-    public static String version = "1.0.2";
+    public static String version = "1.1.2";
     public String template = "";
     public FileConfiguration config = getConfig();
 
@@ -45,6 +45,7 @@ public class main extends JavaPlugin{
                         mail.userName = config.getString("smtpUser");
                         mail.password = config.getString("smtpPassword");
                         mail.port = config.getInt("smtpPort");
+                        mail.useSSL = config.getBoolean("useSSL");
 
                         StringBuilder fromMessage = new StringBuilder();
                         for (String s : args) {
