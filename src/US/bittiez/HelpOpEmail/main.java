@@ -18,7 +18,7 @@ import java.util.List;
 
 
 public class main extends JavaPlugin{
-    public static String version = "1.2.3";
+    public static String version = "1.2.4";
     public String template = "";
     public FileConfiguration config = getConfig();
 
