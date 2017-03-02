@@ -18,7 +18,7 @@ import java.util.List;
 
 
 public class main extends JavaPlugin{
-    public static String version = "1.2.2";
+    public static String version = "1.2.3";
     public String template = "";
     public FileConfiguration config = getConfig();
 
@@ -31,7 +31,15 @@ public class main extends JavaPlugin{
     public boolean onCommand(CommandSender sender, Command cmd, String label, String args[]) {
         if(cmd.getName().equalsIgnoreCase("reloadhelpop")){
             if(sender.hasPermission("HelpOp.reload")){
+                checkTemplate();
                 createConfig();
+                this.reloadConfig();
+                config = getConfig();
+                sender.sendMessage("Config reloaded!");
+                return true;
+            } else {
+                sender.sendMessage("You do not have the required permissions to use this command!");
+                Log.info(sender.getName() + " tried to use /ReloadHelpOp but does not have the permission HelpOp.reload");
             }
         }
         if(cmd.getName().equalsIgnoreCase("helpop")) {
@@ -51,6 +59,7 @@ public class main extends JavaPlugin{
                         mail.password = config.getString("smtpPassword");
                         mail.port = config.getInt("smtpPort");
                         mail.useSSL = config.getBoolean("useSSL");
+                        mail.smtpAuth = config.getBoolean("smtpAuth");
 
                         StringBuilder fromMessage = new StringBuilder();
                         for (String s : args) {

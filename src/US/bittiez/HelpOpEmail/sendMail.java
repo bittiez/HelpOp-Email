@@ -2,12 +2,9 @@ package US.bittiez.HelpOpEmail;
 
 import org.bukkit.craftbukkit.libs.jline.internal.Log;
 
-import javax.mail.Message;
-import javax.mail.Session;
-import javax.mail.Transport;
+import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import java.net.ConnectException;
 import java.util.Properties;
 
 /**
@@ -23,6 +20,7 @@ public class sendMail implements Runnable {
     public String password;
     public int port;
     public boolean useSSL;
+    public boolean smtpAuth;
 
     @Override
     public void run() {
@@ -34,15 +32,24 @@ public class sendMail implements Runnable {
                         Properties emailProperties = new Properties();
                         emailProperties.setProperty("mail.smtp.host", host);
                         emailProperties.setProperty("mail.smtp.port", String.valueOf(port));
+                        emailProperties.setProperty("mail.stmp.from", from);
+                        emailProperties.setProperty("mail.smtp.socketFactory.port", String.valueOf(port));
+                        emailProperties.setProperty("mail.smtp.connectiontimeout", "7000");
+                        emailProperties.setProperty("mail.transport.protocol", "smtp");
 
                         if(userName != null && !userName.isEmpty())
-                            emailProperties.setProperty("mail.user", userName);
-                        if(password != null && !password.isEmpty())
-                            emailProperties.setProperty("mail.password", password);
-                        if(useSSL)
+                            emailProperties.setProperty("mail.smtp.user", userName);
+                        if(password != null && !password.isEmpty()) {
+                            emailProperties.setProperty("mail.smtp.password", password);
+                        }
+                        if(useSSL) {
                             emailProperties.setProperty("mail.smtp.ssl.enable", "true");
+                            emailProperties.setProperty("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+                        }
+                        if(smtpAuth)
+                            emailProperties.setProperty("mail.smtp.auth", "true");
 
-                        Session session = Session.getDefaultInstance(emailProperties);
+                        Session session = Session.getInstance(emailProperties);
 
                         try{
                             // Create a default MimeMessage object.
@@ -60,13 +67,23 @@ public class sendMail implements Runnable {
                             message.setSubject(subject);
 
                             // Send the actual HTML message, as big as you like
-                            message.setContent(this.message, "text/html" );
+                            message.setContent(this.message, "text/html; charset=utf-8" );
 
                             // Send message
-                            Transport.send(message);
+                            if(smtpAuth)
+                                Transport.send(message, userName, password);
+                            else
+                                Transport.send(message);
                             Log.info("HelpOp Email has been sent");
                         } catch (Exception mex) {
                             Log.error("An error occurred trying to the a HelpOp email. Error details:");
+                            Log.error(String.format("Connection info: [%s:%s] [%s] [%s]",
+                                    host,
+                                    port,
+                                    from,
+                                    userName));
+
+
                             mex.printStackTrace();
                         }
 
