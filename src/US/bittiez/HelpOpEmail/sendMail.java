@@ -48,14 +48,20 @@ public class sendMail implements Runnable {
                             emailProperties.setProperty("mail.smtp.ssl.enable", "true");
                             emailProperties.setProperty("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
                         }
-                        if(smtpAuth)
+                        Session session = null;
+                        if(smtpAuth) {
                             emailProperties.setProperty("mail.smtp.auth", "true");
-
-                        Session session = Session.getInstance(emailProperties);
+                            SmtpAuthenticator auth = new SmtpAuthenticator();
+                            auth.username = this.userName;
+                            auth.password = this.password;
+                            session = Session.getInstance(emailProperties, auth);
+                        } else {
+                            session = Session.getInstance(emailProperties);
+                        }
 
                         try{
                             // Create a default MimeMessage object.
-                            Message message = new MimeMessage(session);
+                            MimeMessage message = new MimeMessage(session);
 
                             // Set From: header field of the header.
                             message.setFrom(new InternetAddress(from));
@@ -70,12 +76,13 @@ public class sendMail implements Runnable {
 
                             Multipart mp = new MimeMultipart();
                             MimeBodyPart body = new MimeBodyPart();
-                            body.setContent(this.message, "text/html");
+                            body.setContent(this.message, "text/html; charset=utf-8");
                             mp.addBodyPart(body);
 
                             // Send the actual HTML message, as big as you like
                             message.setContent(mp);
 
+                            Thread.currentThread().setContextClassLoader( getClass().getClassLoader() );
                             // Send message
                             Transport.send(message);
                             Log.info("HelpOp Email has been sent");
