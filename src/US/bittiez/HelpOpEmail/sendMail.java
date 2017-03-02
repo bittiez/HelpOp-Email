@@ -4,7 +4,9 @@ import org.bukkit.craftbukkit.libs.jline.internal.Log;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 import java.util.Properties;
 
 /**
@@ -53,7 +55,7 @@ public class sendMail implements Runnable {
 
                         try{
                             // Create a default MimeMessage object.
-                            MimeMessage message = new MimeMessage(session);
+                            Message message = new MimeMessage(session);
 
                             // Set From: header field of the header.
                             message.setFrom(new InternetAddress(from));
@@ -66,14 +68,16 @@ public class sendMail implements Runnable {
                             // Set Subject: header field
                             message.setSubject(subject);
 
+                            Multipart mp = new MimeMultipart();
+                            MimeBodyPart body = new MimeBodyPart();
+                            body.setContent(this.message, "text/html");
+                            mp.addBodyPart(body);
+
                             // Send the actual HTML message, as big as you like
-                            message.setContent(this.message, "text/html; charset=utf-8" );
+                            message.setContent(mp);
 
                             // Send message
-                            if(smtpAuth)
-                                Transport.send(message, userName, password);
-                            else
-                                Transport.send(message);
+                            Transport.send(message);
                             Log.info("HelpOp Email has been sent");
                         } catch (Exception mex) {
                             Log.error("An error occurred trying to the a HelpOp email. Error details:");
