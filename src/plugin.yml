@@ -1,10 +1,10 @@
 name: HelpOpEmail
-version: 1.2.4
+version: 2.0.0
 author: bittiez
 main: US.bittiez.HelpOpEmail.main
 commands:
     HelpOp:
-        description: /HelpOp <message> will send a help request to online staff and send an email to the support team.
+        description: /HelpOp <message> will send a help request to online staff and send emails and texts set up in the config.
         usage: /HelpOp <message>
         permission: HelpOp.ask
     ReloadHelpOp:

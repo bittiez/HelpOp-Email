@@ -86,7 +86,7 @@ public class main extends JavaPlugin {
                             for (Player p : Bukkit.getServer().getOnlinePlayers()) {
                                 if (p.hasPermission("HelpOp.receive")) {
                                     p.sendMessage(ChatColor.GREEN + "[HelpOp] [" + sender.getName() + "]" + ChatColor.AQUA + " asked: " + fromMessage);
-                                    p.sendMessage(ChatColor.GREEN + "[HelpOp]" + ChatColor.AQUA + " This message has also been dispatched to the email(s) set up in the config.");
+                                    p.sendMessage(ChatColor.GREEN + "[HelpOp]" + ChatColor.AQUA + " This message has also been dispatched to the email(s)/texts set up in the config.");
                                 }
                             }
 

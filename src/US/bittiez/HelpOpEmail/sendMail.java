@@ -12,7 +12,7 @@ import java.util.Properties;
 /**
  * Created by bitti on 4/3/2016.
  */
-public class sendMail implements Runnable {
+public class SendMail implements Runnable {
     public String[] to;
     public String from;
     public String message;

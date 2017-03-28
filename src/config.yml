@@ -30,4 +30,4 @@ twilio_numbers:
     - 12021234567
     - 13033217654
 #Can use [USERNAME], [MESSAGE], [LOCATION]
-twilio_text: "[USERNAME] sent a new helpop: [MESSAGE]"
+twilio_text: "[USERNAME] sent a new /helpop: [MESSAGE]"
