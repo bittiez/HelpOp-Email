@@ -4,6 +4,7 @@
     <root id="archive" name="HelpOpEmail.jar">
       <element id="module-output" name="HelpOpEmail" />
       <element id="extracted-dir" path="$PROJECT_DIR$/src/mail-1.4.7.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/reqlibs/twilio-7.8.0-jar-with-dependencies.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>

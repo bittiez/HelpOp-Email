@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module type="JAVA_MODULE" version="4">
-  <component name="NewModuleRootManager" inherit-compiler-output="false">
+  <component name="NewModuleRootManager">
     <output url="file:///production/HelpOpEmail" />
     <output-test url="file:///test/HelpOpEmail" />
     <exclude-output />
@@ -11,5 +11,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="patched_1.11.2" level="project" />
     <orderEntry type="library" name="mail-1.4.7" level="project" />
+    <orderEntry type="library" name="twilio-7.8.0-jar-with-dependencies" level="project" />
   </component>
 </module>

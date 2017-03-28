@@ -22,6 +22,8 @@ public class main extends JavaPlugin{
     public String template = "";
     public FileConfiguration config = getConfig();
 
+    public Boolean emailEnabled = true;
+
     @Override
     public void onEnable(){
         createConfig();
@@ -35,6 +37,7 @@ public class main extends JavaPlugin{
                 createConfig();
                 this.reloadConfig();
                 config = getConfig();
+                emailEnabled = !config.getBoolean("disable_email");
                 sender.sendMessage("Config reloaded!");
                 return true;
             } else {
@@ -49,39 +52,42 @@ public class main extends JavaPlugin{
             } else {
                 if(args.length > 0){
                     if(sender.hasPermission("HelpOp.ask")) {
-                        sendMail mail = new sendMail();
-                        mail.from = config.getString("emailFrom");
-                        List<String> sendTos = config.getStringList("emailTo");
-                        mail.to = sendTos.toArray(new String[0]);
-                        mail.subject = config.getString("emailSubject");
-                        mail.host = config.getString("emailHost");
-                        mail.userName = config.getString("smtpUser");
-                        mail.password = config.getString("smtpPassword");
-                        mail.port = config.getInt("smtpPort");
-                        mail.useSSL = config.getBoolean("useSSL");
-                        mail.smtpAuth = config.getBoolean("smtpAuth");
+                        if(emailEnabled) {
+                            sendMail mail = new sendMail();
+                            mail.from = config.getString("emailFrom");
+                            List<String> sendTos = config.getStringList("emailTo");
+                            mail.to = sendTos.toArray(new String[0]);
+                            mail.subject = config.getString("emailSubject");
+                            mail.host = config.getString("emailHost");
+                            mail.userName = config.getString("smtpUser");
+                            mail.password = config.getString("smtpPassword");
+                            mail.port = config.getInt("smtpPort");
+                            mail.useSSL = config.getBoolean("useSSL");
+                            mail.smtpAuth = config.getBoolean("smtpAuth");
 
-                        StringBuilder fromMessage = new StringBuilder();
-                        for (String s : args) {
-                            fromMessage.append(s + " ");
-                        }
-
-                        Player who = (Player)sender;
-                        String tempTemplate = template;
-                        tempTemplate = tempTemplate.replaceAll("(\\[USERNAME\\])", sender.getName());
-                        tempTemplate = tempTemplate.replaceAll("(\\[MESSAGE\\])", fromMessage.toString());
-                        tempTemplate = tempTemplate.replaceAll("(\\[LOCATION\\])", String.format("[X: %s] [Y: %s] [Z: %s] [WORLD: %s]", who.getLocation().getX() + "", who.getLocation().getY() + "", who.getLocation().getZ() + "", who.getWorld().getName()));
-                        mail.message = tempTemplate;
-                        new Thread(mail).start();
-
-                        for(Player p : Bukkit.getServer().getOnlinePlayers()){
-                            if(p.hasPermission("HelpOp.receive")) {
-                                p.sendMessage(ChatColor.GREEN + "[HelpOp] [" + sender.getName() + "]" + ChatColor.AQUA + " asked: " + fromMessage);
-                                p.sendMessage(ChatColor.GREEN + "[HelpOp]" + ChatColor.AQUA + " This message has also been dispatched to the email(s) set up in the config.");
+                            StringBuilder fromMessage = new StringBuilder();
+                            for (String s : args) {
+                                fromMessage.append(s + " ");
                             }
+
+                            Player who = (Player) sender;
+                            String tempTemplate = template;
+                            tempTemplate = tempTemplate.replaceAll("(\\[USERNAME\\])", sender.getName());
+                            tempTemplate = tempTemplate.replaceAll("(\\[MESSAGE\\])", fromMessage.toString());
+                            tempTemplate = tempTemplate.replaceAll("(\\[LOCATION\\])", String.format("[X: %s] [Y: %s] [Z: %s] [WORLD: %s]", who.getLocation().getX() + "", who.getLocation().getY() + "", who.getLocation().getZ() + "", who.getWorld().getName()));
+                            mail.message = tempTemplate;
+                            new Thread(mail).start();
+
+                            for (Player p : Bukkit.getServer().getOnlinePlayers()) {
+                                if (p.hasPermission("HelpOp.receive")) {
+                                    p.sendMessage(ChatColor.GREEN + "[HelpOp] [" + sender.getName() + "]" + ChatColor.AQUA + " asked: " + fromMessage);
+                                    p.sendMessage(ChatColor.GREEN + "[HelpOp]" + ChatColor.AQUA + " This message has also been dispatched to the email(s) set up in the config.");
+                                }
+                            }
+
+                            sender.sendMessage(ChatColor.AQUA + "Your support request has been received, we will be in contact shortly!");
                         }
 
-                        sender.sendMessage(ChatColor.AQUA + "Your support request has been received, we will be in contact shortly!");
                         return true;
                     } else {
                         sender.sendMessage("You do not have the required permissions to use this command!");

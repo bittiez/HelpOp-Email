@@ -9,3 +9,6 @@ smtpPassword: ""
 smtpPort: 25
 smtpAuth: true
 useSSL: true
+
+#Should we turn the email feature off?
+disable_email: false
