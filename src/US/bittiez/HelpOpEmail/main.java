@@ -1,5 +1,6 @@
 package US.bittiez.HelpOpEmail;
 
+import US.bittiez.HelpOpEmail.Twilio.SendMessage;
 import org.apache.commons.io.FileUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -17,27 +18,31 @@ import java.nio.file.Files;
 import java.util.List;
 
 
-public class main extends JavaPlugin{
+public class main extends JavaPlugin {
     public static String version = "1.2.4";
     public String template = "";
     public FileConfiguration config = getConfig();
 
     public Boolean emailEnabled = true;
+    public Boolean twilioEnabled = false;
 
     @Override
-    public void onEnable(){
+    public void onEnable() {
         createConfig();
         checkTemplate();
+        emailEnabled = !config.getBoolean("disable_email", true);
+        twilioEnabled = !config.getBoolean("disable_twilio");
     }
 
     public boolean onCommand(CommandSender sender, Command cmd, String label, String args[]) {
-        if(cmd.getName().equalsIgnoreCase("reloadhelpop")){
-            if(sender.hasPermission("HelpOp.reload")){
+        if (cmd.getName().equalsIgnoreCase("reloadhelpop")) {
+            if (sender.hasPermission("HelpOp.reload")) {
                 checkTemplate();
                 createConfig();
                 this.reloadConfig();
                 config = getConfig();
-                emailEnabled = !config.getBoolean("disable_email");
+                emailEnabled = !config.getBoolean("disable_email", true);
+                twilioEnabled = !config.getBoolean("disable_twilio");
                 sender.sendMessage("Config reloaded!");
                 return true;
             } else {
@@ -45,15 +50,21 @@ public class main extends JavaPlugin{
                 Log.info(sender.getName() + " tried to use /ReloadHelpOp but does not have the permission HelpOp.reload");
             }
         }
-        if(cmd.getName().equalsIgnoreCase("helpop")) {
+        if (cmd.getName().equalsIgnoreCase("helpop")) {
             if (!(sender instanceof Player)) {
                 sender.sendMessage(ChatColor.RED
                         + "HelpOp is not available from the console.");
             } else {
-                if(args.length > 0){
-                    if(sender.hasPermission("HelpOp.ask")) {
-                        if(emailEnabled) {
-                            sendMail mail = new sendMail();
+                if (args.length > 0) {
+                    if (sender.hasPermission("HelpOp.ask")) {
+                        StringBuilder fromMessage = new StringBuilder();
+                        Player who = (Player) sender;
+                        for (String s : args) {
+                            fromMessage.append(s + " ");
+                        }
+
+                        if (emailEnabled) {
+                            SendMail mail = new SendMail();
                             mail.from = config.getString("emailFrom");
                             List<String> sendTos = config.getStringList("emailTo");
                             mail.to = sendTos.toArray(new String[0]);
@@ -65,12 +76,6 @@ public class main extends JavaPlugin{
                             mail.useSSL = config.getBoolean("useSSL");
                             mail.smtpAuth = config.getBoolean("smtpAuth");
 
-                            StringBuilder fromMessage = new StringBuilder();
-                            for (String s : args) {
-                                fromMessage.append(s + " ");
-                            }
-
-                            Player who = (Player) sender;
                             String tempTemplate = template;
                             tempTemplate = tempTemplate.replaceAll("(\\[USERNAME\\])", sender.getName());
                             tempTemplate = tempTemplate.replaceAll("(\\[MESSAGE\\])", fromMessage.toString());
@@ -87,6 +92,25 @@ public class main extends JavaPlugin{
 
                             sender.sendMessage(ChatColor.AQUA + "Your support request has been received, we will be in contact shortly!");
                         }
+                        if (twilioEnabled) {
+                            String msg = config.getString("twilio_text");
+                            msg = msg.replaceAll("(\\[USERNAME\\])", sender.getName());
+                            msg = msg.replaceAll("(\\[MESSAGE\\])", fromMessage.toString());
+                            msg = msg.replaceAll("(\\[LOCATION\\])", String.format("[X: %s] [Y: %s] [Z: %s] [WORLD: %s]", who.getLocation().getX() + "", who.getLocation().getY() + "", who.getLocation().getZ() + "", who.getWorld().getName()));
+
+                            for (String sendTo : config.getStringList("twilio_numbers")) {
+                                SendMessage se = new SendMessage(
+                                        config.getString("twilio_account_sid", ""),
+                                        config.getString("twilio_auth_token", ""),
+                                        msg,
+                                        config.getString("twilio_phone", "123"),
+                                        sendTo
+                                );
+                                new Thread(se).start();
+                            }
+
+
+                        }
 
                         return true;
                     } else {
@@ -99,9 +123,9 @@ public class main extends JavaPlugin{
         return false;
     }
 
-    private boolean checkTemplate(){
+    private boolean checkTemplate() {
         File template = new File("plugins/HelpOpEmail/emailTemplate.html");
-        if(!template.exists()){
+        if (!template.exists()) {
             URL inputUrl = getClass().getResource("/emailTemplate.html");
             try {
                 FileUtils.copyURLToFile(inputUrl, template);

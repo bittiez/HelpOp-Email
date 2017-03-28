@@ -12,3 +12,22 @@ useSSL: true
 
 #Should we turn the email feature off?
 disable_email: false
+
+
+#Twilio SMS setup
+#SMS will be disabled by default
+disable_twilio: true
+#Your Twilio phone number, must be in the format of 12223334444     ( 1 222 333 4444 )
+twilio_phone: 11011011101
+
+# Find your Account Sid and Token at twilio.com/user/account
+#Your account sid
+twilio_account_sid:
+#Your auth token
+twilio_auth_token:
+#Numbers to text, must be in the format of 12223334444     ( 1 222 333 4444 )
+twilio_numbers:
+    - 12021234567
+    - 13033217654
+#Can use [USERNAME], [MESSAGE], [LOCATION]
+twilio_text: "[USERNAME] sent a new helpop: [MESSAGE]"
