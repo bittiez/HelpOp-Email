@@ -1,6 +1,8 @@
-package US.bittiez.HelpOpEmail;
+package US.bittiez.HelpOpPro;
 
-import US.bittiez.HelpOpEmail.Twilio.SendMessage;
+import US.bittiez.HelpOpPro.Twilio.SendMessage;
+import US.bittiez.HelpOpPro.UpdateChecker.UpdateChecker;
+import US.bittiez.HelpOpPro.UpdateChecker.UpdateStatus;
 import org.apache.commons.io.FileUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -32,6 +34,15 @@ public class main extends JavaPlugin {
         checkTemplate();
         emailEnabled = !config.getBoolean("disable_email", true);
         twilioEnabled = !config.getBoolean("disable_twilio");
+
+        UpdateStatus update = new UpdateChecker("https://github.com/bittiez/HelpOp-Email/raw/master/src/plugin.yml", getDescription().getVersion()).getStatus();
+        if (update.HasUpdate) {
+            getServer().getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
+                public void run() {
+                    Log.info("HelpOp Pro has a new update, check it out at https://github.com/bittiez/HelpOp-Email or https://www.spigotmc.org/resources/helpop-email.21332/");
+                }
+            }, 20 * 60);
+        }
     }
 
     public boolean onCommand(CommandSender sender, Command cmd, String label, String args[]) {
@@ -124,7 +135,7 @@ public class main extends JavaPlugin {
     }
 
     private boolean checkTemplate() {
-        File template = new File("plugins/HelpOpEmail/emailTemplate.html");
+        File template = new File("plugins/HelpOpPro/emailTemplate.html");
         if (!template.exists()) {
             URL inputUrl = getClass().getResource("/emailTemplate.html");
             try {

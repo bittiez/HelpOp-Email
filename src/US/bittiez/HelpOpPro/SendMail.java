@@ -1,17 +1,17 @@
-package US.bittiez.HelpOpEmail;
+package US.bittiez.HelpOpPro;
 
 import org.bukkit.craftbukkit.libs.jline.internal.Log;
 
-import javax.mail.*;
+import javax.mail.Message;
+import javax.mail.Multipart;
+import javax.mail.Session;
+import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import java.util.Properties;
 
-/**
- * Created by bitti on 4/3/2016.
- */
 public class SendMail implements Runnable {
     public String[] to;
     public String from;
@@ -26,10 +26,10 @@ public class SendMail implements Runnable {
 
     @Override
     public void run() {
-        if(to.length > 0){ // We have emails to send it to!
-            if(from != null && !from.isEmpty()){ // We have a sender!
-                if(message != null && !message.isEmpty()){// We have a message!
-                    if(host != null && !host.isEmpty()){
+        if (to.length > 0) { // We have emails to send it to!
+            if (from != null && !from.isEmpty()) { // We have a sender!
+                if (message != null && !message.isEmpty()) {// We have a message!
+                    if (host != null && !host.isEmpty()) {
 
                         Properties emailProperties = new Properties();
                         emailProperties.setProperty("mail.smtp.host", host);
@@ -39,17 +39,17 @@ public class SendMail implements Runnable {
                         emailProperties.setProperty("mail.smtp.connectiontimeout", "7000");
                         emailProperties.setProperty("mail.transport.protocol", "smtp");
 
-                        if(userName != null && !userName.isEmpty())
+                        if (userName != null && !userName.isEmpty())
                             emailProperties.setProperty("mail.smtp.user", userName);
-                        if(password != null && !password.isEmpty()) {
+                        if (password != null && !password.isEmpty()) {
                             emailProperties.setProperty("mail.smtp.password", password);
                         }
-                        if(useSSL) {
+                        if (useSSL) {
                             emailProperties.setProperty("mail.smtp.ssl.enable", "true");
                             emailProperties.setProperty("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
                         }
                         Session session = null;
-                        if(smtpAuth) {
+                        if (smtpAuth) {
                             emailProperties.setProperty("mail.smtp.auth", "true");
                             SmtpAuthenticator auth = new SmtpAuthenticator();
                             auth.username = this.userName;
@@ -59,7 +59,7 @@ public class SendMail implements Runnable {
                             session = Session.getInstance(emailProperties);
                         }
 
-                        try{
+                        try {
                             // Create a default MimeMessage object.
                             MimeMessage message = new MimeMessage(session);
 
@@ -67,7 +67,7 @@ public class SendMail implements Runnable {
                             message.setFrom(new InternetAddress(from));
 
                             // Set To: header field of the header.
-                            for (String sendTo : to){
+                            for (String sendTo : to) {
                                 message.addRecipient(Message.RecipientType.TO, new InternetAddress(sendTo));
                             }
 
@@ -82,7 +82,7 @@ public class SendMail implements Runnable {
                             // Send the actual HTML message, as big as you like
                             message.setContent(mp);
 
-                            Thread.currentThread().setContextClassLoader( getClass().getClassLoader() );
+                            Thread.currentThread().setContextClassLoader(getClass().getClassLoader());
                             // Send message
                             Transport.send(message);
                             Log.info("HelpOp Email has been sent");

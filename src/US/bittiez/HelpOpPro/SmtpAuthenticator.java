@@ -1,4 +1,4 @@
-package US.bittiez.HelpOpEmail;
+package US.bittiez.HelpOpPro;
 
 import javax.mail.Authenticator;
 import javax.mail.PasswordAuthentication;
