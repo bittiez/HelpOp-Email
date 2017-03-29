@@ -39,7 +39,7 @@ public class main extends JavaPlugin {
         if (update.HasUpdate) {
             getServer().getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
                 public void run() {
-                    Log.info("HelpOp Pro has a new update, check it out at https://github.com/bittiez/HelpOp-Email or https://www.spigotmc.org/resources/helpop-email.21332/");
+                    Log.info("HelpOp Pro has a new update, check it out at https://github.com/bittiez/HelpOp-Email or https://www.spigotmc.org/resources/helpop-pro.21332/");
                 }
             }, 20 * 60);
         }
@@ -88,9 +88,7 @@ public class main extends JavaPlugin {
                             mail.smtpAuth = config.getBoolean("smtpAuth");
 
                             String tempTemplate = template;
-                            tempTemplate = tempTemplate.replaceAll("(\\[USERNAME\\])", sender.getName());
-                            tempTemplate = tempTemplate.replaceAll("(\\[MESSAGE\\])", fromMessage.toString());
-                            tempTemplate = tempTemplate.replaceAll("(\\[LOCATION\\])", String.format("[X: %s] [Y: %s] [Z: %s] [WORLD: %s]", who.getLocation().getX() + "", who.getLocation().getY() + "", who.getLocation().getZ() + "", who.getWorld().getName()));
+                            tempTemplate = replacePlaceholders(tempTemplate, who, fromMessage.toString());
                             mail.message = tempTemplate;
                             new Thread(mail).start();
 
@@ -105,9 +103,7 @@ public class main extends JavaPlugin {
                         }
                         if (twilioEnabled) {
                             String msg = config.getString("twilio_text");
-                            msg = msg.replaceAll("(\\[USERNAME\\])", sender.getName());
-                            msg = msg.replaceAll("(\\[MESSAGE\\])", fromMessage.toString());
-                            msg = msg.replaceAll("(\\[LOCATION\\])", String.format("[X: %s] [Y: %s] [Z: %s] [WORLD: %s]", who.getLocation().getX() + "", who.getLocation().getY() + "", who.getLocation().getZ() + "", who.getWorld().getName()));
+                            msg = replacePlaceholders(msg, who, fromMessage.toString());
 
                             for (String sendTo : config.getStringList("twilio_numbers")) {
                                 SendMessage se = new SendMessage(
@@ -132,6 +128,14 @@ public class main extends JavaPlugin {
             }
         }
         return false;
+    }
+
+    private String replacePlaceholders(String message, Player player, String playerMessage){
+        message = message.replaceAll("(\\[USERNAME\\])", player.getName());
+        message = message.replaceAll("(\\[MESSAGE\\])", playerMessage);
+        message = message.replaceAll("(\\[LOCATION\\])", String.format("[X: %s] [Y: %s] [Z: %s] [WORLD: %s]", player.getLocation().getX() + "", player.getLocation().getY() + "", player.getLocation().getZ() + "", player.getWorld().getName()));
+        message = message.replaceAll("(\\[SERVER\\])", player.getServer().getServerName());
+        return message;
     }
 
     private boolean checkTemplate() {

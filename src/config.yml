@@ -29,5 +29,5 @@ twilio_auth_token:
 twilio_numbers:
     - 12021234567
     - 13033217654
-#Can use [USERNAME], [MESSAGE], [LOCATION]
+#Can use [USERNAME], [MESSAGE], [LOCATION], [SERVER]
 twilio_text: "[USERNAME] sent a new /helpop: [MESSAGE]"
