@@ -1,5 +1,6 @@
 package US.bittiez.HelpOpPro;
 
+import US.bittiez.HelpOpPro.DiscordWebhook.DiscordWebHook;
 import US.bittiez.HelpOpPro.Twilio.SendMessage;
 import US.bittiez.HelpOpPro.UpdateChecker.UpdateChecker;
 import US.bittiez.HelpOpPro.UpdateChecker.UpdateStatus;
@@ -115,8 +116,10 @@ public class main extends JavaPlugin {
                                 );
                                 new Thread(se).start();
                             }
-
-
+                        }
+                        if (config.getBoolean("enable_discord_webhook", false)) {
+                            DiscordWebHook discordWebHook = new DiscordWebHook(config.getString("discord_webhook_url"), replacePlaceholders(config.getString("discord_text"), who, fromMessage.toString()));
+                            new Thread(discordWebHook).start();
                         }
 
                         return true;
@@ -130,7 +133,7 @@ public class main extends JavaPlugin {
         return false;
     }
 
-    private String replacePlaceholders(String message, Player player, String playerMessage){
+    private String replacePlaceholders(String message, Player player, String playerMessage) {
         message = message.replaceAll("(\\[USERNAME\\])", player.getName());
         message = message.replaceAll("(\\[MESSAGE\\])", playerMessage);
         message = message.replaceAll("(\\[LOCATION\\])", String.format("[X: %s] [Y: %s] [Z: %s] [WORLD: %s]", player.getLocation().getX() + "", player.getLocation().getY() + "", player.getLocation().getZ() + "", player.getWorld().getName()));

@@ -1,9 +1,8 @@
 package US.bittiez.HelpOpPro.Twilio;
 
+import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;
-
-import com.twilio.Twilio;
 
 public class SendMessage implements Runnable {
     private String ACCOUNT_SID, AUTH_TOKEN, Body, From, To;

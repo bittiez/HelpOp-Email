@@ -31,3 +31,11 @@ twilio_numbers:
     - 13033217654
 #Can use [USERNAME], [MESSAGE], [LOCATION], [SERVER]
 twilio_text: "[USERNAME] sent a new /helpop: [MESSAGE]"
+
+
+# Discord Webhook
+# Get this from your discord server
+enable_discord_webhook: false
+discord_webhook_url: ""
+#Can use [USERNAME], [MESSAGE], [LOCATION], [SERVER]
+discord_text: "[USERNAME] sent a new /helpop: [MESSAGE] from [LOCATION]"
