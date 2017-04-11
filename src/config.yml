@@ -38,4 +38,4 @@ twilio_text: "[USERNAME] sent a new /helpop: [MESSAGE]"
 enable_discord_webhook: false
 discord_webhook_url: ""
 #Can use [USERNAME], [MESSAGE], [LOCATION], [SERVER]
-discord_text: "[USERNAME] sent a new /helpop: [MESSAGE] from [LOCATION]"
+discord_text: "**[USERNAME] sent a new /helpop:**\n\n`[MESSAGE]`\n\nfrom [LOCATION]"
