@@ -14,6 +14,7 @@ When a player types /helpop \<message\>, the message will be sent to:
 - All online staff with the permission `HelpOp.receive`
 - All emails (if enabled) in the config file
 - All phone numbers(if enabled, via text) in the config file
+- A discord channel via WebHooks
 
 
 # Permissions
