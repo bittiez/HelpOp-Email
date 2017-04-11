@@ -9,7 +9,6 @@ import org.json.simple.JSONObject;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.logging.Logger;
 
 public class DiscordWebHook implements Runnable {
     private String webhookUrl;
@@ -31,7 +30,7 @@ public class DiscordWebHook implements Runnable {
             thePost.addHeader("content-type", "application/json");
             thePost.addHeader("User-Agent", "Mozilla/5.0 (X11; U; Linux i686) Gecko/20071127 Firefox/2.0.0.11");
             thePost.setEntity(params);
-            Logger.getGlobal().info(httpClient.execute(thePost).toString());
+            httpClient.execute(thePost).toString();
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (ClientProtocolException e) {
