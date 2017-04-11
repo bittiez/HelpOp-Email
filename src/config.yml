@@ -11,7 +11,7 @@ smtpAuth: true
 useSSL: true
 
 #Should we turn the email feature off?
-disable_email: false
+disable_email: true
 
 
 #Twilio SMS setup
