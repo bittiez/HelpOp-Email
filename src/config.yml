@@ -11,7 +11,7 @@ smtpAuth: true
 useSSL: true
 
 #Should we turn the email feature off?
-disable_email: false
+disable_email: true
 
 
 #Twilio SMS setup
@@ -46,4 +46,4 @@ discord_text: "**[USERNAME] sent a new /helpop:**\n\n`[MESSAGE]`\n\nfrom [LOCATI
 enable_slack_webhook: false
 slack_webhook_url: ""
 #Can use [USERNAME], [MESSAGE], [LOCATION], [SERVER]
-slack_text: "**[USERNAME] sent a new /helpop:**\n\n`[MESSAGE]`\n\nfrom [LOCATION]"
+slack_text: "*[USERNAME] sent a new /helpop:*\n\n`[MESSAGE]`\n\nfrom [LOCATION]"

@@ -26,7 +26,7 @@ public class SlackWebHook implements Runnable {
         HttpClient httpClient = HttpClientBuilder.create().build();
         try {
             HttpPost thePost = new HttpPost(webhookUrl);
-            StringEntity params = new StringEntity("{\"content\": \"" + JSONObject.escape(message) + "\"}");
+            StringEntity params = new StringEntity("{\"text\": \"" + JSONObject.escape(message) + "\"}");
             thePost.addHeader("content-type", "application/json");
             thePost.addHeader("User-Agent", "Mozilla/5.0 (X11; U; Linux i686) Gecko/20071127 Firefox/2.0.0.11");
             thePost.setEntity(params);
