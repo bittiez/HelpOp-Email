@@ -34,7 +34,7 @@ public class SendMail implements Runnable {
                         Properties emailProperties = new Properties();
                         emailProperties.setProperty("mail.smtp.host", host);
                         emailProperties.setProperty("mail.smtp.port", String.valueOf(port));
-                        emailProperties.setProperty("mail.stmp.from", from);
+                        emailProperties.setProperty("mail.smtp.from", from);
                         emailProperties.setProperty("mail.smtp.socketFactory.port", String.valueOf(port));
                         emailProperties.setProperty("mail.smtp.connectiontimeout", "7000");
                         emailProperties.setProperty("mail.transport.protocol", "smtp");
